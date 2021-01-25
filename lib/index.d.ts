@@ -1647,7 +1647,7 @@ declare namespace Joi {
         /**
          * Appends the allowed object keys. If schema is null, undefined, or {}, no changes will be applied.
          */
-        append(schema?: SchemaMap<TSchema>): this;
+        append<TNewSchema extends Record<string, SchemaLike>>(o?: TNewSchema): ObjectSchema<TSchema & SimplifyObjectSchema<TNewSchema>, Meta<"optional", TSchema & SimplifyObjectSchema<TNewSchema>>>;
 
         /**
          * Verifies an assertion where.
@@ -1666,7 +1666,7 @@ declare namespace Joi {
         /**
          * Sets or extends the allowed object keys.
          */
-        keys(schema?: SchemaMap<TSchema>): this;
+        keys<TNewSchema extends Record<keyof TSchema, SchemaLike>>(o?: TNewSchema): ObjectSchema<SimplifyObjectSchema<TNewSchema>, Meta<"optional", SimplifyObjectSchema<TNewSchema>>>;
 
         /**
          * Specifies the exact number of keys in the object.
