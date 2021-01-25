@@ -2013,22 +2013,22 @@ declare namespace Joi {
         /**
          * Generates a schema object that matches any data type.
          */
-        any(): AnySchema;
+        any(): AnySchema<Meta<"optional", unknown>>;
 
         /**
          * Generates a schema object that matches an array data type.
          */
-        array(): ArraySchema;
+        array<T>(): ArraySchema<T, Meta<"optional", T[]>>;
 
         /**
          * Generates a schema object that matches a boolean data type (as well as the strings 'true', 'false', 'yes', and 'no'). Can also be called via bool().
          */
-        bool(): BooleanSchema;
+        bool(): BooleanSchema<Meta<"optional", boolean>>;
 
         /**
          * Generates a schema object that matches a boolean data type (as well as the strings 'true', 'false', 'yes', and 'no'). Can also be called via bool().
          */
-        boolean(): BooleanSchema;
+        boolean(): BooleanSchema<Meta<"optional", boolean>>;
 
         /**
          * Generates a schema object that matches a Buffer data type (as well as the strings which will be converted to Buffers).
@@ -2038,7 +2038,7 @@ declare namespace Joi {
         /**
          * Generates a schema object that matches a date type (as well as a JavaScript date string or number of milliseconds).
          */
-        date(): DateSchema;
+        date(): DateSchema<Meta<"optional", Date>>;
 
         /**
          * Generates a schema object that matches a function type.
@@ -2053,35 +2053,35 @@ declare namespace Joi {
         /**
          * Generates a schema object that matches a number data type (as well as strings that can be converted to numbers).
          */
-        number(): NumberSchema;
+        number(): NumberSchema<Meta<"optional", number>>;
 
         /**
          * Generates a schema object that matches an object data type (as well as JSON strings that have been parsed into objects).
          */
         // tslint:disable-next-line:no-unnecessary-generics
-        object<TSchema = any, T = TSchema>(schema?: SchemaMap<T>): ObjectSchema<TSchema>;
+        object<TSchema extends SchemaLike = any, T extends SchemaLike = TSchema, TNewSchema extends Record<keyof TSchema, T> = Record<keyof TSchema, T>>(o?: TNewSchema): ObjectSchema<SimplifyObjectSchema<TNewSchema>, Meta<"optional", SimplifyObjectSchema<TNewSchema>>>;
 
         /**
          * Generates a schema object that matches a string data type. Note that empty strings are not allowed by default and must be enabled with allow('').
          */
-        string(): StringSchema;
+        string(): StringSchema<Meta<"optional", string>>;
 
         /**
          * Generates a schema object that matches any symbol.
          */
-        symbol(): SymbolSchema;
+        symbol(): SymbolSchema<Meta<"optional", string>>;
 
         /**
          * Generates a type that will match one of the provided alternative schemas
          */
-        alternatives(types: SchemaLike[]): AlternativesSchema;
-        alternatives(...types: SchemaLike[]): AlternativesSchema;
+        alternatives<T extends SchemaLike>(types: T[]): AlternativesSchema<Meta<"optional", SchemaToType<T>>>;
+        alternatives<T extends SchemaLike>(...types: T[]): AlternativesSchema<Meta<"optional", SchemaToType<T>>>;
 
         /**
          * Alias for `alternatives`
          */
-        alt(types: SchemaLike[]): AlternativesSchema;
-        alt(...types: SchemaLike[]): AlternativesSchema;
+        alt<T extends SchemaLike>(types: T[]): AlternativesSchema<Meta<"optional", SchemaToType<T>>>;
+        alt<T extends SchemaLike>(...types: T[]): AlternativesSchema<Meta<"optional", SchemaToType<T>>>;
 
         /**
          * Links to another schema node and reuses it for validation, typically for creative recursive schemas.
