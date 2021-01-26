@@ -1578,7 +1578,7 @@ declare namespace Joi {
          *
          * @param type - a joi schema object to validate each array item against.
          */
-        items<TThis>(this: TThis, ...types: SchemaLikeWithoutArray[]): TThis;
+        items<T extends SchemaLike>(...types: T[]): ArraySchema<SchemaToType<T>, ReplaceType<TMeta, SchemaToType<T>[]>>;
 
         /**
          * Specifies the exact number of items in the array.
